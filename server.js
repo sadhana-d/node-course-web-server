@@ -7,10 +7,12 @@ app.set("view engine", "hbs");
 app.use(express.static(__dirname+"/public"));
 
 hbs.registerPartials(__dirname+'/views/partials');
-
-app.use((req,res,error) =>{
-  res.render('maintenance.hbs');
-})
+hbs.registerHelper('getCurrentYear',()=>{
+  return new Date().getFullYear();
+});
+// app.use((req,res,error) =>{
+//   res.render('maintenance.hbs');
+// })
 app.get("/", (req,res) => {
 //  res.send('Hello Express');
 // res.send({
@@ -30,10 +32,15 @@ res.render("home.hbs",{
 app.get("/about", (req,res) => {
   res.render("about.hbs",{
     pageTitle:'About Page',
-    currentYear: new Date().getFullYear()
+    //currentYear: new Date().getFullYear()
   });
 });
 
+app.get('/projects',(req,res) =>{
+  res.render('projects.hbs',{
+    pageTitle: 'Project'
+  });
+});
 app.listen(port,() => {
   console.log(`Server running on port ${port}`);
 });
